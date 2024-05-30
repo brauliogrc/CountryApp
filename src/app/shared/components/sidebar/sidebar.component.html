@@ -1,0 +1,47 @@
+<h2>Paises</h2>
+<hr>
+
+<ul class="list-group">
+    <!-- 
+        - routerLinkActive="active" Hace que se pinte el li cuando la URL coincide con lo que se encuentra en "routerLink"
+        - [routerLinkActiveOptions]="{ exact: true }" Hace que se pinte el componente solo si el URL es exactamente lo que se encuentra en
+        la propiedad "routerLink" (revisar las diversas opciones que pueden ser utilizadas)
+     -->
+    <!-- <li
+        routerLink=""
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="list-group-item">
+        Home page
+    </li>
+    <li
+        routerLink="about"
+        routerLinkActive="active"
+        class="list-group-item">
+        About page
+    </li>
+    <li
+        routerLink="contact"
+        routerLinkActive="active"
+        class="list-group-item">
+        Contact page
+    </li> -->
+    <li
+        routerLink="countries/by-capital"
+        routerLinkActive="active"
+        class="list-group-item">
+        By capital
+    </li>
+    <li
+        routerLink="countries/by-country"
+        routerLinkActive="active"
+        class="list-group-item">
+        By country
+    </li>
+    <li
+        routerLink="countries/by-region"
+        routerLinkActive="active"
+        class="list-group-item">
+        By region
+    </li>
+</ul>

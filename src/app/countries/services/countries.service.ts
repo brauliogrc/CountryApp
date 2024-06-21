@@ -14,7 +14,18 @@ export class CountriesService {
         byRegion: { region: '', countries: [] },
     };
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.loadFromLoscalStorage();
+    }
+
+    private saveToLocalStorage() {
+        localStorage.setItem('cacheStore', JSON.stringify( this.cacheStorage ));
+    }
+
+    private loadFromLoscalStorage() {
+        if ( !localStorage.getItem('cacheStore') ) return;
+        this.cacheStorage = JSON.parse( localStorage.getItem('cacheStore')! );
+    }
 
     // Optimizacion de llamada a la API para evitar tener codigo duplicado
     private getCountriesRequest(url: string): Observable<Array<ICountry>> {
@@ -46,21 +57,24 @@ export class CountriesService {
                  * En este caso, en "tap" se esta haciendo el almacenamiento de la data en el objeto
                  * creado a manera de cache
                  */
-                tap( countries => this.cacheStorage.byCapital = { term, countries })
+                tap( countries => this.cacheStorage.byCapital = { term, countries }),
+                tap( () => this.saveToLocalStorage() )
             );
     }
 
     public searchByCountry(term: string): Observable<Array<ICountry>> {
         return this.getCountriesRequest(`${this.apiUrl}/name/${term}`)
             .pipe(
-                tap( countries => this.cacheStorage.byCountry = { term, countries })
+                tap( countries => this.cacheStorage.byCountry = { term, countries }),
+                tap( () => this.saveToLocalStorage() )
             );
     }
 
     public searchByRegion(region: Region): Observable<Array<ICountry>> {
         return this.getCountriesRequest(`${this.apiUrl}/region/${region}`)
             .pipe(
-                tap( countries => this.cacheStorage.byRegion = { region, countries })
+                tap( countries => this.cacheStorage.byRegion = { region, countries }),
+                tap( () => this.saveToLocalStorage() )
             );
     }
 }
